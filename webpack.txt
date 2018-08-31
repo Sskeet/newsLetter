@@ -7,13 +7,14 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   watch: true,
-  entry: {
-    main: './client/src/index.js'
-  },
- // this is for output where you want to put your file after complete build process
+
+  // it can be multiple file. For multiple file use array with proper path
+  entry: ['./client/src/index.js'], 
+
+  // this is for output where you want to put your file after complete build process
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index.bundle.js',
+    filename: 'bundle.js',
   },
 
   // here we will load some external resource. which we are using to build our project
@@ -29,7 +30,7 @@ module.exports = {
         include: [/src/, /tests/],
         loader: 'eslint-loader',
         options: {
-          // fix: true
+          fix: true
         }
       },
       {
@@ -71,14 +72,25 @@ module.exports = {
       'window.$': 'jquery',
       'window.jQuery': 'jquery',
     }),
-    // new CopyWebpackPlugin([{
-    //   from: './src/assets',
-    //   to: 'assets',
-    // }]),
+    new CopyWebpackPlugin([{
+      from: './src/assets',
+      to: 'assets',
+    }]),
     new HtmlWebpackPlugin({
-      template: './client/src/index.html',
+      template: './src/index.html',
       chunksSortMode: 'dependency',
     }),
     new CleanWebpackPlugin(['dist']),
-  ]
+  ],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 5000,
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000',
+        secure: false
+      }
+    }
+  }
 };
