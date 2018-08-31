@@ -77,6 +77,9 @@ module.exports = {
     // }]),
     new HtmlWebpackPlugin({
       template: './client/src/index.html',
+      minify:{
+        collapseWhitespace: true
+      },
       chunksSortMode: 'dependency',
     }),
     new CleanWebpackPlugin(['dist']),
