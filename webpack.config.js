@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     main: './client/src/index.js'
   },
- // this is for output where you want to put your file after complete build process
+  // this is for output where you want to put your file after complete build process
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.bundle.js',
@@ -20,8 +20,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,                     // it will find all js
-        use: 'babel-loader',               // which will perform some functioanlity during build process.
+        test: /\.js$/, // it will find all js
+        use: 'babel-loader', // which will perform some functioanlity during build process.
         exclude: [/node_modules/, /dist/], // expect this
       },
       // {
@@ -29,8 +29,9 @@ module.exports = {
       //   include: [/src/, /tests/],
       //   loader: 'eslint-loader',
       //   options: {
-      //     // fix: true
+      //     //fix: true
       //   }
+
       // },
       {
         test: /\.scss$/,
@@ -54,13 +55,6 @@ module.exports = {
         loader: 'file-loader?name=fonts/[name].[ext]',
         exclude: [/font-awesome/],
       },
-      {
-        test: /\.(png|jpg|gif)$/,
-        loader: 'file-loader',
-        options: {
-         outputPath: 'dist/img'
-        },
-      },
     ],
   },
   plugins: [
@@ -72,11 +66,15 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './client/src/index.html',
-      minify:{
+      minify: {
         collapseWhitespace: true
       },
       chunksSortMode: 'dependency',
     }),
+    new CopyWebpackPlugin([{
+      from: './client/img',
+      to: 'img',
+    }]),
     new CleanWebpackPlugin(['dist']),
   ]
 };
