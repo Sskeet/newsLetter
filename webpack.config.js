@@ -24,14 +24,14 @@ module.exports = {
         use: 'babel-loader',               // which will perform some functioanlity during build process.
         exclude: [/node_modules/, /dist/], // expect this
       },
-      {
-        test: /\.js$/,
-        include: [/src/, /tests/],
-        loader: 'eslint-loader',
-        options: {
-          // fix: true
-        }
-      },
+      // {
+      //   test: /\.js$/,
+      //   include: [/src/, /tests/],
+      //   loader: 'eslint-loader',
+      //   options: {
+      //     // fix: true
+      //   }
+      // },
       {
         test: /\.scss$/,
         use: [{
@@ -58,8 +58,7 @@ module.exports = {
         test: /\.(png|jpg|gif)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]',
-          outputPath: 'assets/',
+         outputPath: 'dist/img'
         },
       },
     ],
@@ -71,10 +70,6 @@ module.exports = {
       'window.$': 'jquery',
       'window.jQuery': 'jquery',
     }),
-    // new CopyWebpackPlugin([{
-    //   from: './src/assets',
-    //   to: 'assets',
-    // }]),
     new HtmlWebpackPlugin({
       template: './client/src/index.html',
       minify:{
